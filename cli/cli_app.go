@@ -720,8 +720,9 @@ func needsInit(terragruntOptions *options.TerragruntOptions, terragruntConfig *c
 
 // Returns true if we need to run `terraform init` to download providers
 func providersNeedInit(terragruntOptions *options.TerragruntOptions) bool {
-	providersPath := util.JoinPath(terragruntOptions.DataDir(), "plugins")
-	return !util.FileExists(providersPath)
+	oldProvidersPath := util.JoinPath(terragruntOptions.DataDir(), "plugins")
+	providersPath := util.JoinPath(terragruntOptions.DataDir(), "providers")
+	return !util.FileExists(oldProvidersPath) && !util.FileExists(providersPath)
 }
 
 // Runs the terraform init command to perform what is referred to as Auto-Init in the README.md.
